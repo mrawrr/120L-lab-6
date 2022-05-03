@@ -59,5 +59,34 @@ give back a summary of how many there are summarize
 lab6_summary <- lab6 %>% # Save as new data frame
   group_by(moodcond, filmtype) %>% 
   summarise(mean_cl_normal(anx))
+
+lab6_summary
 ```
+
+Create Graph
+
+```{r}
+lab6_graph <- ggplot(lab6_summary, 
+                     aes(x = moodcond, 
+                         y = y,
+                         ymin = ymin, # Lower end of bar = lower CI bound
+                         ymax = ymax, # Upper end of bar = upper CI bound
+                         color = filmtype)) + # Different colors by film type
+  geom_pointrange(position = position_dodge(width = .25)) + # Shift sideways to avoid overlap
+  labs(title = "Effect of mood and film type on anxiety scores", 
+       x = "Mood", 
+       y = "Anxiety",
+       color = "Film type") + 
+  coord_cartesian(ylim = c(1,5)) # Set upper and lower bounds of graph
+
+
+lab6_graph
+```
+
+
+
+
+
+
+
 
