@@ -51,3 +51,13 @@ lab6 <- lab6 %>%
 
 ```
 
+
+Group_by() categorical variables
+give back a summary of how many there are summarize
+
+```{r}
+lab6_summary <- lab6 %>% # Save as new data frame
+  group_by(moodcond, filmtype) %>% 
+  summarise(mean_cl_normal(anx))
+```
+
