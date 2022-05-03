@@ -84,6 +84,31 @@ lab6_graph
 ```
 
 
+ANOVA trial
+
+```{r}
+a1 <- aov_ez(data = lab6, # Which data frame to use
+             id = "id", # Name of variable specifying participant IDs
+             dv = "anx", # Name of dependent variable
+             between = c("moodcond", "filmtype") # Name(s) of independent variable(s)
+             )
+
+a1
+
+```
+
+Visualize ANOVA and get means with emmeans
+
+```{r}
+emmeans(a1, ~ moodcond)
+emmeans(a1, ~ filmtype)
+emmeans(a1, ~ filmtype*moodcond)
+```
+
+
+
+
+
 
 
 
