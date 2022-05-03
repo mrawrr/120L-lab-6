@@ -5,24 +5,49 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(afex)
+library(emmeans)
+library(psych)
+library(tidyverse)
+library(dplyr)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+Import Data using `read.csv()`
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+lab6 <- read.csv("lab6_data.csv")
 ```
 
-## Including Plots
+Practice running independent samples t-test
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+dep_pet <- t.test(dep ~ pet, data = lab6)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Results from Welch Two Sample T-Test on the effects of having pets on depression is significant (p < 0.05)
+(t(129.682) = 3.74)
+Mpets(from the 0 value in estimate) v Mnopets(from the 1 value in estimate)
+
+
+
+Use `mutate()` to create a new column with recoded variables
+Recode variables using `recode()`
+
+## Where can we use this in our experiment?
+
+```{r}
+lab6 <- lab6 %>% 
+  mutate(moodcond = recode(moodcond,
+                  `0` = "Negative",
+                  `1` = "Positive",
+                  .default = NA_character_))
+
+lab6 <- lab6 %>% 
+  mutate(filmtype = recode(filmtype,
+                           `0` = "Disgust",
+                           `1` = "Fear",
+                           .default = NA_character_))
+
+```
+
