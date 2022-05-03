@@ -10,16 +10,17 @@ library(emmeans)
 library(psych)
 library(tidyverse)
 library(dplyr)
+library(svglite)
 ```
 
 
-Import Data using `read.csv()`
+## Import Data using `read.csv()`
 
 ```{r}
 lab6 <- read.csv("lab6_data.csv")
 ```
 
-Practice running independent samples t-test
+## Practice running independent samples t-test
 
 ```{r}
 dep_pet <- t.test(dep ~ pet, data = lab6)
@@ -31,10 +32,10 @@ Mpets(from the 0 value in estimate) v Mnopets(from the 1 value in estimate)
 
 
 
-Use `mutate()` to create a new column with recoded variables
-Recode variables using `recode()`
+## Use `mutate()` to create a new column with recoded variables
+- Recode variables using `recode()`
 
-## Where can we use this in our experiment?
+### Where can we use this in our experiment?
 
 ```{r}
 lab6 <- lab6 %>% 
@@ -52,8 +53,8 @@ lab6 <- lab6 %>%
 ```
 
 
-Group_by() categorical variables
-give back a summary of how many there are summarize
+## Group_by() categorical variables
+## give back a summary of how many there are summarize
 
 ```{r}
 lab6_summary <- lab6 %>% # Save as new data frame
@@ -63,7 +64,7 @@ lab6_summary <- lab6 %>% # Save as new data frame
 lab6_summary
 ```
 
-Create Graph
+## Create Graph
 
 ```{r}
 lab6_graph <- ggplot(lab6_summary, 
@@ -84,7 +85,7 @@ lab6_graph
 ```
 
 
-ANOVA trial
+## ANOVA trial
 
 ```{r}
 a1 <- aov_ez(data = lab6, # Which data frame to use
@@ -97,7 +98,7 @@ a1
 
 ```
 
-Visualize ANOVA and get means with emmeans
+## Visualize ANOVA and get means with emmeans
 
 ```{r}
 emmeans(a1, ~ moodcond)
@@ -105,6 +106,23 @@ emmeans(a1, ~ filmtype)
 emmeans(a1, ~ filmtype*moodcond)
 ```
 
+## Exporting Graphs
+
+```{r}
+ggsave(plot = lab6_graph, # The graph we want to save
+       filename = "Lab 6 example graph.svg", # The file name we want to use
+       units = "in", # Measurements in inches
+       width = 12, # Set width
+       height = 8) # Set height
+
+ggsave(plot = lab6_graph,
+       filename = "Lab 6 example graph.png", # Different file extension!
+       dpi = "print", # Set DPI manually
+       units = "in",
+       width = 12, 
+height = 8)
+
+```
 
 
 
