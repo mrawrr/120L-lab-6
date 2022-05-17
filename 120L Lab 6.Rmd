@@ -57,17 +57,19 @@ lab6 <- lab6 %>%
 ## give back a summary of how many there are summarize
 
 ```{r}
-lab6_summary <- lab6 %>% # Save as new data frame
+lab6 %>%
   group_by(moodcond, filmtype) %>% 
-  summarise(mean_cl_normal(anx))
+  summarise(mean_anx = mean(anx, na.rm = T))
 
-lab6_summary
+lab6
 ```
+
+
 
 ## Create Graph
 
 ```{r}
-lab6_graph <- ggplot(lab6_summary, 
+lab6_graph <- ggplot(lab6, 
                      aes(x = moodcond, 
                          y = y,
                          ymin = ymin, # Lower end of bar = lower CI bound
@@ -80,8 +82,6 @@ lab6_graph <- ggplot(lab6_summary,
        color = "Film type") + 
   coord_cartesian(ylim = c(1,5)) # Set upper and lower bounds of graph
 
-
-lab6_graph
 ```
 
 
