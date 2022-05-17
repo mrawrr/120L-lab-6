@@ -1,0 +1,59 @@
+---
+title: "newproj"
+output: html_document
+date: '2022-05-03'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(afex)
+library(emmeans)
+library(psych)
+library(tidyverse)
+library(dplyr)
+library(Hmisc)
+```
+
+#Import data using read.csv()
+
+```{r}
+lab6<-read.csv("lab6_data.csv")
+```
+
+```{r}
+dep_pet<-t.test(dep~pet,data=lab6)
+```
+
+t(129.682)=3.74
+df=129.682
+p<.05
+Mpets v Mnopets
+M1 V M0
+M1=2.089024
+M0=2.559745
+
+
+## Where can we use this in our experiment?
+
+```{r}
+lab6<-lab6 %>%
+  mutate(moodcond=
+           recode(moodcond,
+                  `0`="Negative",
+                  `1`="Positive",
+                  .default= NA_character_),
+         filmtype=recode(filmtype,
+                         `0`="Digust",
+                         `1`="Fear"),
+         .default=NA_character_)
+
+```
+
+
+```{r}
+lab6_summary <- lab6 %>%
+  group_by(moodcond, filmtype) %>%
+  summarise(mean_cl_normal(anx))
+
+lab6_summary
+```
